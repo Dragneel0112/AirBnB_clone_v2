@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-""" 
-Created on Sun 16 Apr 2023 
+"""
+Created on Sun 16 Apr 2023
 @authors: Surina and Ruven
 Tests for base_model
 """
@@ -28,7 +28,7 @@ class test_basemodel(unittest.TestCase):
     def tearDown(self):
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_default(self):

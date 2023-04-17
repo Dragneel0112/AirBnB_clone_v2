@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-""" 
-Created on Sun 16 Apr 2023 
+"""
+Created on Sun 16 Apr 2023
 @authors: Surina and Ruven
 Tests for Place
 """

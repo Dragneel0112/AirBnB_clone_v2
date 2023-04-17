@@ -33,7 +33,7 @@ class Place(BaseModel, Base):
 
     @property
     def reviews(self):
-        """ Getter attribute reviews 
+        """ Getter attribute reviews
         Returns the list of Reviews with place_id equals current Place.id
         """
         from models import storage
@@ -46,7 +46,7 @@ class Place(BaseModel, Base):
 
     @property
     def amenities(self):
-        """ Getter attribute amenities 
+        """ Getter attribute amenities
         Returns the list of Amenities where amenity_ids
         contain Amenity.id linked to the Place.
         """
