@@ -124,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
                 k, v = param.split('=')
                 try:
                     attribute = HBNBCommand.verify_attribute(v)
-                except Exception:
+                except:
                     continue
                 if not attribute:
                     continue
