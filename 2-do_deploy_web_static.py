@@ -5,7 +5,7 @@ of the web_static to remote server
 '''
 from fabric.api import local, env, put, run
 import os
-import time
+from datetime import datetime
 
 env.user = 'ubuntu'
 env.hosts = ['54.237.108.151', '100.25.111.49']
