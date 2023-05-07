@@ -71,4 +71,8 @@ def deploy():
     """
     Using do_pack and do_deploy to deply files to server
     """
-    return do_deploy(do_pack())
+    archive_path = do_pack()
+    if not archive_path:
+        return False
+
+    return do_deploy(archive_path)
