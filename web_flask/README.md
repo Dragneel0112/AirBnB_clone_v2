@@ -17,7 +17,7 @@
 | <ul><li> - [x] Task 2 </li></ul> | 2. C is fun! | [2-c_route.py](2-c_route.py) |
 | <ul><li> - [x] Task 3 </li></ul> | 3. Python is cool! | [3-python_route.py](3-python_route.py) |
 | <ul><li> - [x] Task 4 </li></ul> | 4. Is it a number? | [4-number_route.py](4-number_route.py) |
-| <ul><li> - [ ] Task 5 </li></ul> | 5. Number template | [5-number_template.py](5-number_template.py), [templates/5-number.html](templates/5-number.html) |
+| <ul><li> - [x] Task 5 </li></ul> | 5. Number template | [5-number_template.py](5-number_template.py), [templates/5-number.html](templates/5-number.html) |
 | <ul><li> - [ ] Task 6 </li></ul> | 6. Odd or even? | [6-number_odd_or_even.py](6-number_odd_or_even.py), [templates/6-number_odd_or_even.html](templates/6-number_odd_or_even.html) |
 | <ul><li> - [ ] Task 7 </li></ul> | 7. Improve engines | [models/engine/file_storage.py](models/engine/file_storage.py), [models/engine/db_storage.py](models/engine/db_storage.py), [models/state.py](models/state.py) |
 | <ul><li> - [ ] Task 8 </li></ul> | 8. List of states | [web_flask/7-states_list.py](web_flask/7-states_list.py), [web_flask/templates/7-states_list.html](web_flask/templates/7-states_list.html) |
