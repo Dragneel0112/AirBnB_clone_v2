@@ -32,7 +32,7 @@ def c_text(text):
 def python_text(text="is cool"):
     '''Displays python is cool as default or text on path '''
     text = text.replace('_', ' ')
-    return "Python  {}".format(text)
+    return "Python {}".format(text)
 
 
 if __name__ == '__main__':
