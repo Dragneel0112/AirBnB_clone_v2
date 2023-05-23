@@ -1,6 +1,16 @@
 #!/usr/bin/python3
 """ Class to manage file storage for AirBnB clone """
 import json
+from models.base_model import BaseModel
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
+
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
 
 
 class FileStorage:
@@ -10,13 +20,16 @@ class FileStorage:
 
     def all(self, cls=None):
         """ Returns a dictionary of models currently in storage """
-        if cls is None:
+        if cls:
+            if type(cls) == str:
+                cls = classes[cls]
+
+            class_name = cls.__name__
+            new_dict = {k: v for (k, v) in FileStorage.__objects.items()
+                        if class_name in k}
+            return new_dict
+        else:
             return FileStorage.__objects
-        my_dict = {}
-        for key, val in FileStorage.__objects.items():
-            if isinstance(val, cls):
-                my_dict[key] = val
-        return my_dict
 
     def new(self, obj):
         """ Adds new object to storage dictionary """
@@ -59,12 +72,9 @@ class FileStorage:
         """ Public instance method to delete obj from __objects
         if available
         """
-        if obj is None:
-            return
-        key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        if key in FileStorage.__objects:
-            del FileStorage.__objects[key]
-            self.save()
+        if obj:
+            key = obj.__class__.__name__ + "." + obj.id
+            self.all().pop(key)
 
     def close(self):
         """ Public method to call reload for deserializing the

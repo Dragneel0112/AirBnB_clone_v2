@@ -1,17 +1,21 @@
 #!/usr/bin/python3
 """ Creates class Place for AirBnB console_v2 """
+import models
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
+from models.review import Review
+from models.amenity import Amenity
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
+import os
 
 
 place_amenity = Table('place_amenity', Base.metadata,
-                      Column('place_id', String(60), ForeignKey('places.id'),
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'),
                              primary_key=True, nullable=False),
                       Column('amenity_id', String(60),
-                             ForeignKey('amenities.id'), primary_key=True,
-                             nullable=False)
-                      )
+                             ForeignKey('amenities.id'),
+                             primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -27,41 +31,43 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float)
     longitude = Column(Float)
-    reviews = relationship("Review", backref='place', cascade="all, delete")
-    amenities = relationship("Amenity", secondary=place_amenity,
-                             viewonly=False)
+    amenity_ids = []
 
-    @property
-    def reviews(self):
-        """ Getter attribute reviews
-        Returns the list of Reviews with place_id equals current Place.id
-        """
-        from models import storage
-        my_list = []
-        extracted_reviews = storage.all('Review').values()
-        for review in extracted_reviews:
-            if self.id == review.place_id:
-                my_list.append(review)
-        return my_list
+    if os.getenv("HBNB_TYPE_STORAGE") == "db":
+        reviews = relationship("Review", backref='place',
+                               cascade="all, delete")
+        amenities = relationship("Amenity", secondary=place_amenity,
+                                 viewonly=False)
+    else:
+        @property
+        def reviews(self):
+            """ Getter attribute reviews
+            Returns the list of Reviews with place_id equals current Place.id
+            """
+            my_list = []
+            extracted_reviews = models.storage.all('Review').values()
+            for review in extracted_reviews:
+                if self.id == review.place_id:
+                    my_list.append(review)
+            return my_list
 
-    @property
-    def amenities(self):
-        """ Getter attribute amenities
-        Returns the list of Amenities where amenity_ids
-        contain Amenity.id linked to the Place.
-        """
-        from models import storage
-        my_list = []
-        extracted_amenities = storage.all('Amenity').values()
-        for amenity in extracted_amenities:
-            if self.id == amenity.amenity_ids:
-                my_list.append(amenity)
-        return my_list
+        @property
+        def amenities(self):
+            """ Getter attribute amenities
+            Returns the list of Amenities where amenity_ids
+            contain Amenity.id linked to the Place.
+            """
+            my_list = []
+            extracted_amenities = models.storage.all('Amenity').values()
+            for amenity in extracted_amenities:
+                if self.id == amenity.amenity_ids:
+                    my_list.append(amenity)
+            return my_list
 
-    @amenities.setter
-    def amenities(self, obj):
-        """ Setter attribute an append method for adding an Amenity.id
-        to the attribute amenity_ids.
-        """
-        if isinstance(obj, 'Amenity'):
-            self.amenity_id.append(obj.id)
+        @amenities.setter
+        def amenities(self, obj):
+            """ Setter attribute an append method for adding an Amenity.id
+            to the attribute amenity_ids.
+            """
+            if obj.__class__.__name__ == "Amenity":
+                self.amenity_ids.append(obj.id)
